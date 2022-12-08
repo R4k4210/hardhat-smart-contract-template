@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 import ethers from "ethers";
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-import "@nomiclabs/hardhat-ethers";
 
 dotenv.config();
 
