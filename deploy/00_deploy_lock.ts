@@ -2,15 +2,15 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
-const deployFunction: DeployFunction = async ({
-  deployments,
-  getNamedAccounts,
-}: HardhatRuntimeEnvironment) => {
+const deployFunction: DeployFunction = async (
+  hre: HardhatRuntimeEnvironment
+) => {
+  const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
   console.log("deployer", deployer);
 
-  const res = await deploy("Lock", {
+  await deploy("Lock", {
     from: deployer,
     log: true,
     args: [Date.now() + 1000],
