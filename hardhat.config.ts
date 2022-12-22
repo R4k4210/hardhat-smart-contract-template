@@ -1,7 +1,9 @@
+import { ethers } from "ethers";
 import dotenv from "dotenv";
-import ethers from "ethers";
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "hardhat-deploy";
+import "./tasks";
 
 dotenv.config();
 
@@ -22,15 +24,6 @@ if (!infuraApiKey) {
 const gasPrice = parseInt(String(ethers.utils.parseUnits("5", "gwei")));
 
 const config: HardhatUserConfig = {
-  solidity: {
-    version: "0.8.17",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
   defaultNetwork: "hardhat", //default chain id: 31337
   networks: {
     hardhat: {
@@ -67,6 +60,26 @@ const config: HardhatUserConfig = {
     apiKey: {
       goerli: goerli_etherscanApiKey,
       mainnet: mainnet_etherscanApiKey,
+    },
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0, // here this will by default take the first account as deployer
+      // 1: 0, // similarly on mainnet it will take the first account as deployer. Note though that depending on how hardhat network are configured, the account 0 on one network can be different than on another
+      // 4: "0x84b9514E013710b9dD0811c9Fe46b837a4A0d8E0", // but for rinkeby it will be a specific address
+      // goerli: "0x84b9514E013710b9dD0811c9Fe46b837a4A0d8E0", // it can also specify a specific netwotk name (specified in hardhat.config.js)
+    },
+    // feeCollector:{
+    //    ...
+    // }
+  },
+  solidity: {
+    version: "0.8.17",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
     },
   },
   paths: {
